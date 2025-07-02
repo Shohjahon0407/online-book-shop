@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <style>.book-list {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.book-card {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.book-card p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.book-card strong {
+    color: #555;
+}
+</style>
+
+<div class="book-list">
+    <div class="book-card">
+      <p><strong>Name:</strong> {{ p.name }}</p>
+      <p><strong>Description:</strong> {{ p.description }}</p>
+      <p><strong>ISBN:</strong> {{ p.isbn }}</p>
+      <p><strong>Price:</strong> ${{ p.price }}</p>
+        {% if user.role == 'Admin' %}
+        <p><a href="{% url 'delete' p.pk %}">Delete</a></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

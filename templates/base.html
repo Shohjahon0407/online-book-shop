@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adorable Navbar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fffafc;
+    }
+
+    .navbar {
+      background-color: #9de186;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar .logo {
+      font-size: 1.8rem;
+      color: #6390ca;
+      font-weight: bold;
+      text-shadow: 1px 1px #71d8cb;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .navbar li {
+      display: inline-block;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #a8c4ed;
+      background-color: #fff0f5;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #c2b769;
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">📖 MyBookSite</div>
+    <ul>
+      <li><a href="{% url 'objects' %}">🏠 Home</a></li>
+    {% if user.role == 'Admin' %}
+      <li><a href="{% url 'add_book' %}">➕ Add Book</a></li>
+    {% endif %}
+      <li><a href="{% url 'objects' %}">📚 All Books</a></li>
+      <li><a href="#">🔍 Search Book</a></li>
+    {% if not user.is_authenticated %}
+      <li><a href="{% url 'login' %}">🔐 Login</a></li>
+    {% endif %}
+    {% if not user.is_authenticated %}
+      <li><a href="{% url 'register' %}">📝 Register</a></li>
+    {% endif %}
+        {% if  user.is_authenticated %}
+      <li><a href="{% url 'logout' %}">🚪 Logout</a></li>
+        {% endif %}
+    </ul>
+  </nav>
+  {% if user.is_authenticated %}
+  <p>welcome {{ user.first_name }}</p>
+  {% endif %}
+
+  <!-- Your page content below -->
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
